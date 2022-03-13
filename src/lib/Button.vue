@@ -1,5 +1,5 @@
 <template>
-  <button class="u-button" :class="classes">
+  <button class="u-button" :class="classes" :disabled="disabled">
     <slot/>
   </button>
 </template>
@@ -23,6 +23,10 @@ export default {
       type:String,
       default:"normal",
     },
+    disabled:{
+      type:Boolean,
+      default:false
+    }
   },
   setup(props){
     const {theme,size,level} = props;
@@ -46,6 +50,7 @@ div{
   $blue:#40a9ff;
   $radius:4px;
   $red:red;
+  $grey:grey;
   .u-button{
     box-sizing: border-box;
     height: $h;
@@ -143,6 +148,21 @@ div{
         &:focus{
           color: darken($red,10%);
         }
+      }
+    }
+    &.u-theme-button {
+      &[disabled] {
+        cursor: not-allowed;
+        color: $grey;
+        &:hover {
+          border-color: $grey;
+        }
+      }
+    }
+    &.u-theme-link, &.u-theme-text {
+      &[disabled] {
+        cursor: not-allowed;
+        color: $grey;
       }
     }
   }
