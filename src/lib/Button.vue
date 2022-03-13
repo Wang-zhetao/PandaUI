@@ -1,10 +1,12 @@
 <template>
-  <button class="u-button" :class="{[`u-theme-${theme}`]:theme}">
+  <button class="u-button" :class="classes">
     <slot/>
   </button>
 </template>
 
 <script lang="ts">
+import {computed} from "vue";
+
 export default {
   name: "Button",
   inheritAttrs:false,
@@ -13,7 +15,21 @@ export default {
       type:String,
       default:'button',
     },
+    size:{
+      type:String,
+      default: "normal",
+    },
   },
+  setup(props){
+    const {theme,size} = props;
+    const classes = computed(()=>{
+      return{
+        [`u-theme-${theme}`]:theme,
+        [`u-size-${size}`]:size
+      };
+    });
+    return{classes}
+  }
 }
 </script>
 
@@ -65,6 +81,18 @@ div{
       color: inherit;
       &:hover,&:focus{
         background: darken(white,5%);
+      }
+    }
+    &.u-theme-button{
+      &.u-size-big{
+        font-size: 24px;
+        height: 48px;
+        padding: 0 16px;
+      }
+      &.u-size-small{
+        font-size: 12px;
+        height: 20px;
+        padding: 0 4px;
       }
     }
   }
