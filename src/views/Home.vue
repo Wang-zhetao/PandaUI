@@ -5,8 +5,8 @@
       <h1>pandaUI</h1>
       <h2>一个厉害的UI 框架</h2>
       <p class="actions">
-        <a>Github</a>
-        <a>开始</a>
+        <a href="https://github.com">Github</a>
+        <router-link to="/doc">开始</router-link>
       </p>
     </div>
   </div>
