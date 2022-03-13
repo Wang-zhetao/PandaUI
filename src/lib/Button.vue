@@ -83,18 +83,17 @@ div{
         background: darken(white,5%);
       }
     }
-    &.u-theme-button{
-      &.u-size-big{
-        font-size: 24px;
-        height: 48px;
-        padding: 0 16px;
-      }
-      &.u-size-small{
-        font-size: 12px;
-        height: 20px;
-        padding: 0 4px;
-      }
-    }
+    &.u-size-big {
+      font-size: 24px;
+      height: 48px;
+      padding: 0 16px;
+  }
+  &.u-size-small{
+    font-size: 12px;
+    height: 20px;
+    padding: 0 4px;
+
+  }
   }
 }
 </style>
