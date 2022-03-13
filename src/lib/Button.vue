@@ -19,13 +19,18 @@ export default {
       type:String,
       default: "normal",
     },
+    level:{
+      type:String,
+      default:"normal",
+    },
   },
   setup(props){
-    const {theme,size} = props;
+    const {theme,size,level} = props;
     const classes = computed(()=>{
       return{
         [`u-theme-${theme}`]:theme,
-        [`u-size-${size}`]:size
+        [`u-size-${size}`]:size,
+        [`u-level-${level}`]:level,
       };
     });
     return{classes}
@@ -40,6 +45,7 @@ div{
   $color:#333;
   $blue:#40a9ff;
   $radius:4px;
+  $red:red;
   .u-button{
     box-sizing: border-box;
     height: $h;
@@ -53,6 +59,7 @@ div{
     color: $color;
     border: 1px solid $border-color;
     box-shadow: 0 1px 0 fade-out(black,0.95);
+    transition: background 250ms;
     & + &{
       margin-right: 8px;
     }
@@ -92,8 +99,52 @@ div{
     font-size: 12px;
     height: 20px;
     padding: 0 4px;
-
   }
+    &.u-theme-button{
+      &.u-level-main{
+        background: $blue;
+        border-color: $blue;
+        &:hover,
+        &:focus{
+          background: darken($blue,10%);
+          border-color: darken($blue,10%);
+        }
+      }
+      &.u-level-danger{
+        background: $red;
+        border-color: $red;
+        color: white;
+        &:hover,
+        &:focus{
+          background: darken($red,10%);
+          border-color: darken($red,10%);
+        }
+      }
+    }
+    &.u-theme-link{
+      &.u-level-danger{
+        color: $red;
+        &:hover,
+        &:focus{
+          color: darken($red,10%);
+        }
+      }
+    }
+    &.u-theme-text{
+      &.u-level-main{
+        &:hover,
+        &:focus{
+          color: darken($blue,10%);
+        }
+      }
+      &.u-level-danger{
+        color: $red;
+        &:hover,
+        &:focus{
+          color: darken($red,10%);
+        }
+      }
+    }
   }
 }
 </style>
