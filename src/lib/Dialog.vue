@@ -1,7 +1,11 @@
-<template>
+<template v-if="visible">
   <div class="u-dialog-overlay"></div>
   <div class="u-dialog-wrapper">
-    <header>标题 <span class="u-dialog-close"></span></header>
+    <div class="u-dialog">
+    <header>
+      标题
+      <span class="u-dialog-close"></span>
+    </header>
     <main>
       <p>第一行字</p>
       <p>第二行字</p>
@@ -11,6 +15,7 @@
       <Button>Cancel</Button>
     </footer>
   </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -18,6 +23,12 @@ import Button from './Button.vue'
 export default {
   name: "Dialog",
   components:{Button},
+  props:{
+    visible:{
+      type:Boolean,
+      default:false
+    }
+  }
 }
 </script>
 
