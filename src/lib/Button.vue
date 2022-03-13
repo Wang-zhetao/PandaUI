@@ -1,5 +1,5 @@
 <template>
-  <button class="u-button" :class="{[`theme-${theme}`]:theme}">
+  <button class="u-button" :class="{[`u-theme-${theme}`]:theme}">
     <slot/>
   </button>
 </template>
@@ -17,7 +17,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 div{
   $h:32px;
   $border-color:#d9d9d9;
