@@ -1,7 +1,7 @@
 <template>
   <div class="u-tabs">
     <div class="u-tabs-nav" ref="container">
-      <div class="u-tabs-nav-item" v-for="(t,index) in titles" :ref="el=>{if (el) navItems[index]=el}" @click="select(t)" :class="{selected :t=== selected}" :key="index">{{t}}</div>
+      <div class="u-tabs-nav-item" v-for="(t,index) in titles" :ref="el => { if (t===selected) selectedItem = el }" @click="select(t)" :class="{selected :t=== selected}" :key="index">{{t}}</div>
       <div class="u-tabs-nav-indicator" ref="indicator"></div>
     </div>
   </div>
@@ -10,33 +10,32 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts">var selectedItem;
+
 import Tab from './Tab.vue'
 import {computed, onMounted, onUpdated, ref} from "vue";
+
 export default {
-  props:{
-    selected:{
-      type:String
+  props: {
+    selected: {
+      type: String
     }
   },
   setup: function (props, context) {
-    const navItems = ref < HTMLDivElement[] > ([])
-    const indicator = ref < HTMLDivElement > (null)
-    const container = ref < HTMLDivElement > (null)
+    const selectedItem = ref<HTMLDivElement[]>([null])
+    const indicator = ref<HTMLDivElement>(null)
+    const container = ref<HTMLDivElement>(null)
     const x = () => {
-      const divs = navItems.value
-      const result = divs.filter(div => div.classList.contains('selected'))[0]
-      console.log(result)
       const {
         width
-      } = result.getBoundingClientRect()
+      } = selectedItem.value.getBoundingClientRect()
       indicator.value.style.width = width + 'px'
       const {
         left: left1
       } = container.value.getBoundingClientRect()
       const {
         left: left2
-      } = result.getBoundingClientRect()
+      } = selectedItem.value.getBoundingClientRect()
       const left = left2 - left1
       indicator.value.style.left = left + 'px'
     }
@@ -60,7 +59,7 @@ export default {
     const select = (title: string) => {
       context.emit('update:selected', title)
     }
-    return {defaults, titles, current, select, navItems, indicator, container}
+    return {defaults, titles, current, select, selectedItem, indicator, container}
   }
 }
 </script>
