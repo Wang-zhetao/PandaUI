@@ -6,11 +6,11 @@
     </div>
   </div>
   <div class="u-tabs-content">
-    <component class="u-tabs-content-item" :class="{selected: c.props.title === selected }" v-for="c in defaults" :is="c" />
+   <component :is="current" :key="current.props.title"/>
   </div>
 </template>
 
-<script lang="ts">var selectedItem;
+<script lang="ts">
 
 import Tab from './Tab.vue'
 import {computed, onMounted, ref, watchEffect} from "vue";
@@ -25,7 +25,7 @@ export default {
     const selectedItem = ref<HTMLDivElement[]>([null])
     const indicator = ref<HTMLDivElement>(null)
     const container = ref<HTMLDivElement>(null)
-    onMounted(()=>{
+    onMounted(() => {
       watchEffect(() => {
         const {
           width
@@ -48,13 +48,16 @@ export default {
         throw  new Error('Tabs 子标签必须是 Tab')
       }
     })
+    const current = computed(()=>{
+      return defaults.find(tag => tag.props.title === props.selected)
+    })
     const titles = defaults.map((tag) => {
       return tag.props.title
     })
     const select = (title: string) => {
       context.emit('update:selected', title)
     }
-    return {defaults, titles, select, selectedItem, indicator, container}
+    return {current,defaults, titles, select, selectedItem, indicator, container}
   }
 }
 </script>
@@ -91,14 +94,6 @@ $border-color:#d9d9d9;
   }
   &-content {
     padding: 8px 0;
-
-    &-item{
-      display: none;
-
-      &.selected{
-        display: block;
-      }
-    }
   }
 }
 </style>
