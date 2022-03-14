@@ -19,7 +19,7 @@ export const router = createRouter({
                 {path:'switch',component:SwitchDemo},
                 {path:'button',component:ButtonDemo},
                 {path:'dialog',component:DialogDemo},
-                {path:'tabs',component:DialogDemo}
+                {path:'tabs',component:TabsDemo}
             ],
         }
     ]
