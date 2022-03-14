@@ -1,5 +1,5 @@
 <template>
-<article>
+<article class="markdown-body">
   <h1>介绍</h1>
   <p>Panda UI 是一款基于 Vue3 和 TypeScript 的 UI 组件库</p>
   <p>这款组件库其实是我为了总结自己这半年的技术经验而写的，全程亲手编写，尽量不采用第三方库
