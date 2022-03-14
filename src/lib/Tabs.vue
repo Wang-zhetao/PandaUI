@@ -1,8 +1,8 @@
 <template>
   <div class="u-tabs">
-    <div class="u-tabs-nav">
-      <div class="u-tabs-nav-item" v-for="(t,index) in titles" @click="select(t)" :class="{selected :t=== selected}" :key="index">{{t}}</div>
-      <div class="u-tabs-nav-indicator"></div>
+    <div class="u-tabs-nav" ref="container">
+      <div class="u-tabs-nav-item" v-for="(t,index) in titles" :ref="el=>{if (el) navItems[index]=el}" @click="select(t)" :class="{selected :t=== selected}" :key="index">{{t}}</div>
+      <div class="u-tabs-nav-indicator" ref="indicator"></div>
     </div>
   </div>
   <div class="u-tabs-content">
@@ -12,33 +12,55 @@
 
 <script lang="ts">
 import Tab from './Tab.vue'
-import {computed} from "vue";
+import {computed, onMounted, onUpdated, ref} from "vue";
 export default {
   props:{
     selected:{
       type:String
     }
   },
-  setup(props,context){
+  setup: function (props, context) {
+    const navItems = ref < HTMLDivElement[] > ([])
+    const indicator = ref < HTMLDivElement > (null)
+    const container = ref < HTMLDivElement > (null)
+    const x = () => {
+      const divs = navItems.value
+      const result = divs.filter(div => div.classList.contains('selected'))[0]
+      console.log(result)
+      const {
+        width
+      } = result.getBoundingClientRect()
+      indicator.value.style.width = width + 'px'
+      const {
+        left: left1
+      } = container.value.getBoundingClientRect()
+      const {
+        left: left2
+      } = result.getBoundingClientRect()
+      const left = left2 - left1
+      indicator.value.style.left = left + 'px'
+    }
+    onMounted(x)
+    onUpdated(x)
     const defaults = context.slots.default()
-    defaults.forEach((tag)=>{
-      if(tag.type !== Tab){
+    defaults.forEach((tag) => {
+      if (tag.type !== Tab) {
         throw  new Error('Tabs 子标签必须是 Tab')
       }
     })
-    const current = computed(()=>{
+    const current = computed(() => {
       console.log('重新 return')
-      return defaults.filter((tag)=>{
+      return defaults.filter((tag) => {
         return tag.props.title === props.selected
       })[0]
     })
-    const titles = defaults.map((tag)=>{
+    const titles = defaults.map((tag) => {
       return tag.props.title
     })
-    const select = (title:string) =>{
-      context.emit('update:selected',title)
+    const select = (title: string) => {
+      context.emit('update:selected', title)
     }
-    return{defaults,titles,current,select}
+    return {defaults, titles, current, select, navItems, indicator, container}
   }
 }
 </script>
