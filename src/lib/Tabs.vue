@@ -1,17 +1,24 @@
 <template>
   <div class="u-tabs">
     <div class="u-tabs-nav">
-      <div class="u-tabs-nav-item" v-for="(t,index) in titles" :key="index">{{t}}</div>
+      <div class="u-tabs-nav-item" v-for="(t,index) in titles" @click="select(t)" :class="{selected :t=== selected}" :key="index">{{t}}</div>
     </div>
   </div>
   <div class="u-tabs-content">
-    <component class="u-tabs-content-item" v-for="(c,index) in defaults" :is="c" :key="index"/>
+    {{current}}
+    <component class="u-tabs-content-item" :is="current"/>
   </div>
 </template>
 
 <script lang="ts">
 import Tab from './Tab.vue'
+import {computed} from "vue";
 export default {
+  props:{
+    selected:{
+      type:String
+    }
+  },
   setup(props,context){
     const defaults = context.slots.default()
     defaults.forEach((tag)=>{
@@ -19,10 +26,19 @@ export default {
         throw  new Error('Tabs 子标签必须是 Tab')
       }
     })
+    const current = computed(()=>{
+      console.log('重新 return')
+      return defaults.filter((tag)=>{
+        return tag.props.title === props.selected
+      })[0]
+    })
     const titles = defaults.map((tag)=>{
       return tag.props.title
     })
-    return{defaults,titles}
+    const select = (title:string) =>{
+      context.emit('update:selected',title)
+    }
+    return{defaults,titles,current,select}
   }
 }
 </script>
