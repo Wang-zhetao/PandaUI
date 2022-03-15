@@ -1,3 +1,6 @@
+<demo>
+常规规范
+</demo>
 <template>
   <Switch v-model:value="bool"/>
 </template>
