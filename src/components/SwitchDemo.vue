@@ -3,9 +3,7 @@
     <h1>Switch 组件示例 </h1>
     <div class="demo">
       <h2>常规用法</h2>
-      <div class="demo-component">
         <Switch1Demo/>
-      </div>
       <div class="demo-actions">
         <Button>查看代码</Button>
       </div>
