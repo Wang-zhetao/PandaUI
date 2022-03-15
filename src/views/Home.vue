@@ -25,7 +25,7 @@
             <use xlink:href="#icon-ts"></use>
           </svg>
           <h3>基于 TypeScript </h3>
-          <p>源代码采用 TypeScript 书写（非严格检查）</p>
+          <p>源代码采用 TypeScript 书写</p>
         </li>
         <li>
           <svg>
@@ -52,24 +52,34 @@ export default {
 $green:#02bcb0;
 $border-radius:4px;
 $color:#007974;
+
 .topnavAndBanner{
   background: linear-gradient(145deg,rgba(277,255,253,1)0%,rgba(183,233,230,1)100%);
   clip-path: ellipse(80% 60% at 50% 40%);
 }
 .features{
   margin: 64px auto;
-  width: 400px;
+  padding: 0 16px;
   @media (min-width: 800px) {
     width: 800px;
+    >ul{
+      >li{
+        width: 50%;
+      }
+    }
   }
   @media (min-width: 1200px) {
     width: 1200px;
+    >ul{
+      >li{
+        width: 33.3333%;
+      }
+    }
   }
   >ul{
     display: flex;
     flex-wrap: wrap;
     >li{
-      width: 400px;
       margin: 16px 0;
       justify-content: start;
       align-content: space-between;
